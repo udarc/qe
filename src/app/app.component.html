@@ -54,7 +54,8 @@
       <button 
         class="btn btn-outline-dark"
         (click)="saveBatchEdits()"
-      >
+      [class.btn-outline-dark="numberOfDeletedQuizzes + numberOfAddedQuizzes + numberOfEditedQuizzes ===0"]
+      [class.btn-outline-dark="numberOfDeletedQuizzes + numberOfAddedQuizzes + numberOfEditedQuizzes >0"]></button>>
         Save Quizzes
         <span 
           class="badge badge-success ml-1"
