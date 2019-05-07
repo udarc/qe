@@ -1,70 +1,49 @@
 <div class="container">
-  <div class="row" *ngIf="serviceDown">
-    <div class="col-md-12">
-      <br>
-      <div class="card">
-          <div class="card-body">
-            <h3>
-                Quiz service down. Please try again later. Sorry : - (
-            </h3>
-          </div>
-      </div>      
+    <div class="row" *ngIf="serviceDown">
+        <div class="col-md-12">
+            <br>
+            <div class="card">
+                <div class="card-body">
+                    <h3>
+                        Quiz service down. Please try again later. Sorry : - (
+                    </h3>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-  <div class="row" *ngIf="!serviceDown">
-    <div class="col-md-4">
-      <br>
-      <button 
-        (click)="addNewQuiz()"
-        class="btn btn-outline-success"
-        >
+    <div class="row" *ngIf="!serviceDown">
+        <div class="col-md-4">
+            <br>
+            <button (click)="addNewQuiz()" class="btn btn-outline-success">
           Add New Quiz
       </button>
-      <button class="btn btn-sm btn-link" (click)="promisesOne()">JS Promises 1</button>
-      <button class="btn btn-sm btn-link" (click)="promiseTwo()">2</button>
-      <button class="btn btn-sm btn-link" (click)="promiseThree()">3</button>
-      <br>
-      <br>
-      <div class="list-group">
-        <a
-          [class.active] = "q === selectedQuiz"
-          (click)="selectQuiz(q)" 
-          href="#"
-          *ngFor="let q of quizzes" 
-          class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-          [style.text-decoration]="q.markedForDelete ? 'line-through' : 'inherit'"
-        >
+            <button class="btn btn-sm btn-link" (click)="promisesOne()">JS Promises 1</button>
+            <button class="btn btn-sm btn-link" (click)="promiseTwo()">2</button>
+            <button class="btn btn-sm btn-link" (click)="promiseThree()">3</button>
+            <br>
+            <br>
+            <div class="list-group">
+                <a [class.active]="q === selectedQuiz" (click)="selectQuiz(q)" href="#" *ngFor="let q of quizzes" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" [style.text-decoration]="q.markedForDelete ? 'line-through' : 'inherit'">
           {{ q.name }}
           <small>
             {{ q.questions.length }} questions
           </small>
         </a>
-      </div>
-    </div>
-    <div class="col-md-8" *ngIf="!selectedQuiz">
-      <br>
-      <div class="card">
-        <div class="card-body">
-          Select or add a new quiz...
+            </div>
         </div>
-      </div>
-    </div>
-    <div 
-    class="col-md-8" 
-    *ngIf="selectedQuiz"
-    [@detailsFromLeft] = "detailsAnimationState"
-    (@detailsFromLeft.done) = " detailsFromLeftAnimationComplete()"
-    >
-      <br>
-      <div
-      [@pulseSaveCancelButtons] = "numberOfDeletedQuizzes + numberOfAddedQuizzes + numberOfEditedQuizzes > 0 ? 'somethingToSave':'nothingToSave' "
-      >
-          <button 
-          class="btn"
-          (click)="saveBatchEdits()"
-          [class.btn-outline-dark]="numberOfDeletedQuizzes + numberOfAddedQuizzes + numberOfEditedQuizzes === 0"
-          [class.btn-dark]="numberOfDeletedQuizzes + numberOfAddedQuizzes + numberOfEditedQuizzes > 0"
-        >
+        <div class="col-md-8" *ngIf="!selectedQuiz">
+            <br>
+            <div class="card">
+                <div class="card-body">
+                    Select or add a new quiz...
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8" [@detailsFromLeft]="detailsAnimationState" (@detailsFromLeft.done)=" detailsFromLeftAnimationComplete()">
+            <div *ngIf="selectedQuiz">
+                <br>
+                <div [@pulseSaveCancelButtons]="numberOfDeletedQuizzes + numberOfAddedQuizzes + numberOfEditedQuizzes > 0 ? 'somethingToSave':'nothingToSave' ">
+                    <button class="btn" (click)="saveBatchEdits()" [class.btn-outline-dark]="numberOfDeletedQuizzes + numberOfAddedQuizzes + numberOfEditedQuizzes === 0" [class.btn-dark]="numberOfDeletedQuizzes + numberOfAddedQuizzes + numberOfEditedQuizzes > 0">
           Save Quizzes
           <span 
             class="badge badge-danger ml-1"
@@ -85,69 +64,53 @@
             * {{ numberOfEditedQuizzes }}
           </span>
         </button>
-        <button 
-          class="btn btn-link"
-          (click)="cancelBatchEdits()"
-        >
+                    <button class="btn btn-link" (click)="cancelBatchEdits()">
           Cancel
         </button>
-      </div>
-      
-      <br>
-      <div class="card">  
-        <div class="card-header">
-          General
-        </div>
-        <div class="card-body">
-          <input 
-            type="text" 
-            [(ngModel)]="selectedQuiz.name"
-            class="form-control">
-        </div>
-      </div>
-      <br>
-      <div class="card">
-        <div class="card-header">
-          Questions
-        </div>
-        <div class="card-body">
-          <button 
-            class="btn btn-outline-success"
-            (click)="addNewQuestion()"
-          >
+                </div>
+
+                <br>
+                <div class="card">
+                    <div class="card-header">
+                        General
+                    </div>
+                    <div class="card-body">
+                        <input type="text" [(ngModel)]="selectedQuiz.name" class="form-control">
+                    </div>
+                </div>
+                <br>
+                <div class="card">
+                    <div class="card-header">
+                        Questions
+                    </div>
+                    <div class="card-body">
+                        <button class="btn btn-outline-success" (click)="addNewQuestion()">
             Add New Question
           </button>
-          <br>
-          <br>
-          <div class="row" *ngFor="let question of selectedQuiz.questions">
-            <div class="col-md-9">
-              <input 
-                type="text" 
-                [(ngModel)]="question.name"
-                class="form-control"
-              />
-            </div>
-            <div class="col-md-3">
-              <button 
-                class="btn btn-link text-danger"
-                (click)="removeQuestion(question)"
-              >
+                        <br>
+                        <br>
+                        <div class="row" *ngFor="let question of selectedQuiz.questions">
+                            <div class="col-md-9">
+                                <input type="text" [(ngModel)]="question.name" class="form-control" />
+                            </div>
+                            <div class="col-md-3">
+                                <button class="btn btn-link text-danger" (click)="removeQuestion(question)">
                 Remove
               </button>
-            </div>
-            <br>
-            <br>
-          </div>
-        </div>
-      </div>
-      <br>
-      <div class="card">
-        <div class="card-header">
-          Other
-        </div>
-        <div class="card-body">
-          <div class="form-check">
-            <label class="form-check-label text-danger">
+                            </div>
+                            <br>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="card">
+                    <div class="card-header">
+                        Other
+                    </div>
+                    <div class="card-body">
+                        <div class="form-check">
+                            <label class="form-check-label text-danger">
                 <input 
                   type="checkbox" 
                   class="form-check-input" 
@@ -155,9 +118,10 @@
                 >
                 Mark for Delete
               </label>
-          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 </div>
